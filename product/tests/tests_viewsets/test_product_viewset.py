@@ -11,11 +11,11 @@ from product.models import Product
 
 
 class TestProductViewSet(APITestCase):
-
     client = APIClient()
 
     def setUp(self):
         self.user = UserFactory()
+
         self.product = ProductFactory(
             title='pro controller',
             price=200.00)
@@ -28,17 +28,16 @@ class TestProductViewSet(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         product_data = json.loads(response.content)
 
-        order_data = json.loads(response.content)[0]
         self.assertEqual(product_data[0]['title'], self.product.title)
         self.assertEqual(product_data[0]['price'], self.product.price)
         self.assertEqual(product_data[0]['active'], self.product.active)
 
     def test_create_product(self):
         category = CategoryFactory()
-        data = json.dumps(
-            {'title': 'notebook',
+        data = json.dumps({
+            'title': 'notebook',
             'price': 800.00,
-            'categories_id': [ category.id ]
+            'categories_id': [category.id]
         })
 
         response = self.client.post(
