@@ -8,6 +8,8 @@
         - "8000:8000"
       env_file:
         - ./env.dev
+      networks:
+        - backend
       depends_on:
         db:
           condition: service_healthy
@@ -25,6 +27,11 @@
         interval: 10s
         timeout: 5s
         retries: 5
+      networks:
+        - backend
+  networks:
+    backend:
+      driver: bridge
 
   volumes:
     postgres_data:
