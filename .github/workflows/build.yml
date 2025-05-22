@@ -1,0 +1,59 @@
+name: Python application
+
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.8, 3.9]
+
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: bookstore_dev_db
+          POSTGRES_USER: bookstore_dev
+          POSTGRES_PASSWORD: bookstore_dev
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      SQL_ENGINE: django.db.backends.postgresql
+      SQL_DATABASE: bookstore_dev_db
+      SQL_USER: bookstore_dev
+      SQL_PASSWORD: bookstore_dev
+      SQL_HOST: localhost
+      SQL_PORT: 5432
+      DJANGO_ALLOWED_HOSTS: "localhost 127.0.0.1"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Poetry
+      run: |
+        python -m ensurepip
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade poetry
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Run migrations
+      run: poetry run python manage.py migrate
+
+    - name: Run tests
+      run: poetry run python manage.py test
