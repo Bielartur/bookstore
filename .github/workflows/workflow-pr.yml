@@ -1,35 +1,59 @@
 name: Python Pull Request Workflow
-on: [pull_request]
-jobs:
 
+on: [pull_request]
+
+jobs:
   qa:
     name: Quality check
     runs-on: ubuntu-22.04
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: bookstore_dev_db
+          POSTGRES_USER: bookstore_dev
+          POSTGRES_PASSWORD: bookstore_dev
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      SQL_ENGINE: django.db.backends.postgresql
+      SQL_DATABASE: bookstore_dev_db
+      SQL_USER: bookstore_dev
+      SQL_PASSWORD: bookstore_dev
+      SQL_HOST: localhost
+      SQL_PORT: 5432
+      DJANGO_ALLOWED_HOSTS: "localhost"
+
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+
       - name: Set up Python
-        uses: actions/setup-python@master
+        uses: actions/setup-python@v4
         with:
           python-version: 3.12
-      - name: Install poetry
+
+      - name: Install Poetry
         run: |
           pip install -U pip
           pip install poetry
-          poetry install
-        env:
-          POETRY_VIRTUALENVS_CREATE: false
-
-      - name: View poetry --help
-        run: poetry --help
 
       - name: Install dependencies
-        shell: bash
-        run: python -m poetry install
+        run: poetry install
 
-      - name: Test
-        run: |
-          poetry run python manage.py test
-      - name: Wemake Python Stylguide
+      - name: Run migrations
+        run: poetry run python manage.py migrate
+
+      - name: Run tests
+        run: poetry run python manage.py test
+
+      - name: Wemake Python Styleguide
         uses: wemake-services/wemake-python-styleguide@0.16.0
         continue-on-error: true
         with:
