@@ -6,7 +6,7 @@ authors = ["Gabriel Canto <gabrielcanto2016@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.12.1"
 pytest = "^8.3.1"
 django = "^5.1.1"
 django-rest-framework = "^0.1.0"
@@ -19,5 +19,5 @@ gunicorn = "^23.0.0"
 factory-boy = "^3.3.1"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry>=1.0"]
 build-backend = "poetry.core.masonry.api"
