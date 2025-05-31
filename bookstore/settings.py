@@ -20,10 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.environment.get("SECRET_KEY")
+SECRET_KEY = "django-insecure-)2t5-(y7%xoc)5wcqx*!#dmngzn)vy!8ok%ui=9@npjcs3h77s"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = int(os.environment.get("DEBUG", default=0))
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'bielartur-bookstore-api-d3076cb7df61.herokuapp.com']
 
