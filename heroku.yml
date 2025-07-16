@@ -1,0 +1,6 @@
+build:
+  docker:
+    web: Dockerfile     # ou o nome do seu Dockerfile
+
+run:
+  web: gunicorn bookstore.wsgi --log-file -
