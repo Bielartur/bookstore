@@ -27,7 +27,7 @@ if dotenv_path.exists():
 
 SECRET_KEY = "django-insecure-f*k@=53bc5!shef1-6w+m$-g)kspbaljz%8k4(j7iuc-u2_dyd"
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'bielartur-bookstore-api-d3076cb7df61.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'bielartur.pythonanywhere.com']
 
 DEBUG = True
 # Application definition
