@@ -84,15 +84,14 @@ WSGI_APPLICATION = "bookstore.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.postgresql"),
-        "NAME": os.environ.get("SQL_DATABASE", "bookstore_dev_db"),
-        "USER": os.environ.get("SQL_USER", "bookstore_dev"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "bookstore_dev"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "ENGINE":   os.environ.get("SQL_ENGINE",   "django.db.backends.sqlite3"),
+        "NAME":     os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+        "USER":     os.environ.get("SQL_USER",     ""),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", ""),
+        "HOST":     os.environ.get("SQL_HOST",     ""),
+        "PORT":     os.environ.get("SQL_PORT",     ""),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
