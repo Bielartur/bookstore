@@ -9,7 +9,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:13
+        image: postgres:15-alpine
         env:
           POSTGRES_DB: bookstore_dev_db
           POSTGRES_USER: bookstore_dev
